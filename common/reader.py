@@ -8,6 +8,12 @@ def get_array(path: str) -> List[int]:
         return [int("".join(row)) for row in reader]
 
 
+def get_bin_array(path: str) -> List[str]:
+    with open(path) as csvfile:
+        reader = csv.reader(csvfile)
+        return ["".join(row) for row in reader]
+
+
 class Command(TypedDict):
     command: str
     value: int

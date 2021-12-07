@@ -1,5 +1,6 @@
 import csv
 from typing import List, TypedDict
+import pandas as pd
 
 
 def get_array(path: str) -> List[int]:
@@ -32,6 +33,9 @@ def get_command_array(path: str) -> List[Command]:
         return [{"command": "".join(row[0]), "value": int("".join(row[1]))} for row in reader]
 
 
+def get_bingo_boards(path: str) -> pd.DataFrame:
+    return pd.read_csv(path, header=None, delimiter=r"\s+")
+
+
 if __name__ == "__main__":
-    result = get_row_array('../6/input.csv')
-    print(result)
+    result = get_bingo_boards('../4/bingo_boards.csv')

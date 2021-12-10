@@ -43,6 +43,11 @@ def get_map(path: str) -> List[List[int]]:
         return [[int(char) for char in line if char != '\n'] for line in lines]
 
 
+def get_lines(path: str) -> List[str]:
+    with open(path) as file:
+        return  file.readlines()
+
+
 if __name__ == "__main__":
-    result = get_map('../9/test.csv')
+    result = get_lines('../10/test.txt')
     print(result)

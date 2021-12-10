@@ -37,5 +37,12 @@ def get_bingo_boards(path: str) -> pd.DataFrame:
     return pd.read_csv(path, header=None, delimiter=r"\s+")
 
 
+def get_map(path: str) -> List[List[int]]:
+    with open(path) as map_file:
+        lines = map_file.readlines()
+        return [[int(char) for char in line if char != '\n'] for line in lines]
+
+
 if __name__ == "__main__":
-    result = get_bingo_boards('../4/bingo_boards.csv')
+    result = get_map('../9/test.csv')
+    print(result)

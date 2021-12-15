@@ -45,7 +45,7 @@ def get_map(path: str) -> List[List[int]]:
 
 def get_lines(path: str) -> List[str]:
     with open(path) as file:
-        return  file.readlines()
+        return file.readlines()
 
 
 if __name__ == "__main__":

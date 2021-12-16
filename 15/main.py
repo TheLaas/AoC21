@@ -34,16 +34,22 @@ def spawn_new(current_tracks: List[Tuple[int, Tuple[int, int]]]):
     return new_tracks
 
 
-[rows, columns] = input_data.shape
-map_data = {idx: value for idx, value in np.ndenumerate(input_data)}
-board = Board(map_data, (rows - 1, columns - 1))
-init_pos = (0, 0)
-tracks = [(0, init_pos)]
-while len(tracks) > 0:
-    tracks = [board.check_and_update_best_track(track) for track in tracks]
-    tracks = spawn_new(tracks)
-    tracks = [track for track in tracks if track[1] in map_data]
-print(f"Part 1 {board.get_end_point_cost() - map_data[(0, 0)]}")
+def do_search(cost_data):
+    [rows, columns] = cost_data.shape
+    map_data = {idx: value for idx, value in np.ndenumerate(cost_data)}
+
+    board = Board(map_data, (rows - 1, columns - 1))
+    init_pos = (0, 0)
+    tracks = [(0, init_pos)]
+    while len(tracks) > 0:
+        tracks = [board.check_and_update_best_track(track) for track in tracks]
+        tracks = spawn_new(tracks)
+        tracks = [track for track in tracks if track[1] in map_data]
+        tracks.sort(key=lambda x: x[0])
+    return board.get_end_point_cost() - map_data[(0, 0)]
+
+
+print(f"Part 1 {do_search(input_data)}")
 
 
 # Part 2
@@ -67,16 +73,5 @@ def fold_down(data: np.ndarray, times: int):
 
 extended_input = fold_right(input_data, 4)
 extended_input = fold_down(extended_input, 4)
-[rows, columns] = extended_input.shape
-map_data = {idx: value for idx, value in np.ndenumerate(extended_input)}
 
-board = Board(map_data, (rows - 1, columns - 1))
-init_pos = (0, 0)
-tracks = [(0, init_pos)]
-while len(tracks) > 0:
-    tracks = [board.check_and_update_best_track(track) for track in tracks]
-    tracks = spawn_new(tracks)
-    tracks = [track for track in tracks if track[1] in map_data]
-    tracks.sort(key=lambda x: x[0])
-
-print(f"Part2 {board.get_end_point_cost() - map_data[(0, 0)]}")
+print(f"Part2 {do_search(extended_input)}")

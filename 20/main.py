@@ -3,7 +3,7 @@ from functools import reduce
 from common import reader
 from typing import List, Tuple
 
-lines = reader.get_lines("test.txt")
+lines = reader.get_lines("input.txt")
 
 
 def separate_input(lines: List[str]) -> Tuple[str, List[List[str]]]:
@@ -57,7 +57,7 @@ def calc_active_pixels(image: List[List[str]]) -> int:
 def get_9_grid_region(x_ind: int, y_ind: int, image: List[List[str]], padding_symbol: str) -> List[List[str]]:
     rows = len(image)
     cols = len(image[0])
-    region = [['.', '.', '.'] for i in range(0, 3)]
+    region = [['.', '.', '.'] for _ in range(0, 3)]
     for i in range(0, 3):
         for j in range(0, 3):
             im_x = x_ind + i - 1
@@ -78,3 +78,11 @@ final_image = iterate_image(new_image, enhance_algo, '#')
 result = calc_active_pixels(final_image)
 print(f"Part 1: {result}")
 
+# Part 2
+padding_symbols = ['.', '#']
+new_image = input_image
+for i in range(0, 50):
+    new_image = iterate_image(new_image, enhance_algo, padding_symbols[i % 2])
+
+result = calc_active_pixels(new_image)
+print(f"Part 2: {result}")
